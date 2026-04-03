@@ -239,5 +239,66 @@ petContainer.addEventListener('click', (e) => {
     }
 });
 
+// Theme Toggle
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggle.textContent = savedTheme === 'light' ? '☀️' : '🌙';
+}
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    document.documentElement.setAttribute('data-theme', newTheme === 'dark' ? '' : 'light');
+    themeToggle.textContent = newTheme === 'light' ? '☀️' : '🌙';
+    localStorage.setItem('theme', newTheme === 'dark' ? '' : 'light');
+});
+
+// Visitor Counter
+let visitors = localStorage.getItem('visitors');
+if (!visitors) {
+    visitors = 1;
+} else {
+    visitors = parseInt(visitors) + 1;
+}
+localStorage.setItem('visitors', visitors);
+document.getElementById('visitorCount').textContent = visitors;
+
+// Fun Section - Quote Generator
+const quotes = [
+    '"I am not in danger, Skyler. I am the danger." - Heisenberg',
+    '"Winter is coming." - Ned Stark',
+    '"Friends don\'t lie." - Eleven',
+    '"The name of the song is Goodbye." - Homelander',
+    '"I don\'t want to conquer anything. I just think the guy with the most freedom in the whole sea is the Pirate King." - Luffy',
+    '"All I do is survive." - Rick Grimes',
+    '"Shall we dance?" - Oikawa',
+    '"Happiness depends on ourselves." - Aristotle',
+    '"The only way to do great work is to love what you do." - Steve Jobs',
+    '"Never give up, never surrender!" - Galaxy Quest'
+];
+
+function newQuote() {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById('funQuote').textContent = randomQuote;
+    document.getElementById('funQuote').style.animation = 'none';
+    setTimeout(() => {
+        document.getElementById('funQuote').style.animation = 'fadeIn 0.5s';
+    }, 10);
+}
+
+// Click Game
+let clickCount = localStorage.getItem('clickCount') || 0;
+document.getElementById('clickScore').textContent = clickCount;
+
+function playGame() {
+    clickCount++;
+    localStorage.setItem('clickCount', clickCount);
+    document.getElementById('clickScore').textContent = clickCount;
+}
+
 // Initialize
 console.log('LeoVerse loaded! Welcome to my universe 🚀');

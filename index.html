@@ -20,6 +20,8 @@
                 <li><a href="#quotes">Quotes</a></li>
                 <li><a href="#art">Art</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" id="themeToggle">🌙</button></li>
+                <li><span class="visitor-count">👁️ <span id="visitorCount">1</span></span></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -398,6 +400,19 @@
         <div class="footer-content">
             <div class="footer-logo">LEOVERSE</div>
             <p>My corner of the internet. Gaming • Anime • TV • Novels • Art</p>
+            
+            <div class="fun-section">
+                <div class="quote-generator" id="quoteGenerator">
+                    <p class="fun-quote" id="funQuote">"Loading wisdom..."</p>
+                    <button class="quote-btn" onclick="newQuote()">🎲 New Quote</button>
+                </div>
+                
+                <div class="game-section">
+                    <button class="game-btn" onclick="playGame()">🎮 Click Game</button>
+                    <p class="click-score">Clicks: <span id="clickScore">0</span></p>
+                </div>
+            </div>
+            
             <p class="copyright">&copy; 2026 LeoVerse. Made with ❤️</p>
         </div>
     </footer>
