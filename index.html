@@ -15,6 +15,7 @@
                 <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#tv">TV Shows</a></li>
                 <li><a href="#gaming">Gaming</a></li>
+                <li><a href="#minigames">Mini Games</a></li>
                 <li><a href="#anime">Anime</a></li>
                 <li><a href="#novels">Novels</a></li>
                 <li><a href="#quotes">Quotes</a></li>
@@ -214,6 +215,66 @@
                             <span class="game-icon" style="display:none">⛏️</span>
                             <span>Minecraft</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini Games -->
+    <section id="minigames" class="section">
+        <div class="container">
+            <h2 class="section-title">🎮 Mini Games</h2>
+            <p class="section-desc">Take a break and play!</p>
+            
+            <div class="games-grid">
+                <!-- Rock Paper Scissors -->
+                <div class="game-card">
+                    <h3>🪨 Rock Paper Scissors</h3>
+                    <div class="rps-game">
+                        <div class="rps-display">
+                            <span class="rps-emoji" id="rpsPlayer">👤</span>
+                            <span class="vs">vs</span>
+                            <span class="rps-emoji" id="rpsComputer">🤖</span>
+                        </div>
+                        <p class="rps-result" id="rpsResult">Choose your move!</p>
+                        <div class="rps-buttons">
+                            <button class="rps-btn" onclick="playRPS('rock')">🪨</button>
+                            <button class="rps-btn" onclick="playRPS('paper')">📄</button>
+                            <button class="rps-btn" onclick="playRPS('scissors')">✂️</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tic Tac Toe -->
+                <div class="game-card">
+                    <h3>⭕ Tic Tac Toe</h3>
+                    <div class="ttt-game">
+                        <div class="ttt-board" id="tttBoard">
+                            <div class="ttt-cell" onclick="playTTT(0)"></div>
+                            <div class="ttt-cell" onclick="playTTT(1)"></div>
+                            <div class="ttt-cell" onclick="playTTT(2)"></div>
+                            <div class="ttt-cell" onclick="playTTT(3)"></div>
+                            <div class="ttt-cell" onclick="playTTT(4)"></div>
+                            <div class="ttt-cell" onclick="playTTT(5)"></div>
+                            <div class="ttt-cell" onclick="playTTT(6)"></div>
+                            <div class="ttt-cell" onclick="playTTT(7)"></div>
+                            <div class="ttt-cell" onclick="playTTT(8)"></div>
+                        </div>
+                        <p class="ttt-result" id="tttResult">Your turn! (X)</p>
+                        <button class="ttt-reset" onclick="resetTTT()">🔄 Reset</button>
+                    </div>
+                </div>
+                
+                <!-- Number Guessing -->
+                <div class="game-card">
+                    <h3>🔢 Guess the Number</h3>
+                    <div class="guess-game">
+                        <p>I'm thinking of a number 1-100</p>
+                        <input type="number" id="guessInput" placeholder="Enter number" min="1" max="100">
+                        <button class="guess-btn" onclick="playGuess()">Guess</button>
+                        <p class="guess-result" id="guessResult">Attempts: 0</p>
+                        <button class="guess-reset" onclick="resetGuess()">🔄 New Game</button>
                     </div>
                 </div>
             </div>

@@ -300,5 +300,105 @@ function playGame() {
     document.getElementById('clickScore').textContent = clickCount;
 }
 
+// Rock Paper Scissors
+function playRPS(playerChoice) {
+    const choices = ['rock', 'paper', 'scissors'];
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
+    const emojis = { rock: '🪨', paper: '📄', scissors: '✂️' };
+    
+    let result = '';
+    if (playerChoice === computerChoice) {
+        result = "It's a tie!";
+    } else if (
+        (playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'paper' && computerChoice === 'rock') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+        result = 'You win! 🎉';
+    } else {
+        result = 'Computer wins! 🤖';
+    }
+    
+    document.getElementById('rpsPlayer').textContent = emojis[playerChoice];
+    document.getElementById('rpsComputer').textContent = emojis[computerChoice];
+    document.getElementById('rpsResult').textContent = result;
+}
+
+// Tic Tac Toe
+let tttBoard = ['', '', '', '', '', '', '', '', ''];
+let tttCurrentPlayer = 'X';
+let tttGameOver = false;
+
+function playTTT(index) {
+    if (tttBoard[index] || tttGameOver) return;
+    
+    tttBoard[index] = tttCurrentPlayer;
+    document.querySelectorAll('.ttt-cell')[index].textContent = tttCurrentPlayer;
+    
+    const winPatterns = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+    ];
+    
+    let won = false;
+    for (let pattern of winPatterns) {
+        if (tttBoard[pattern[0]] && 
+            tttBoard[pattern[0]] === tttBoard[pattern[1]] && 
+            tttBoard[pattern[1]] === tttBoard[pattern[2]]) {
+            won = true;
+            break;
+        }
+    }
+    
+    if (won) {
+        document.getElementById('tttResult').textContent = `Player ${tttCurrentPlayer} wins! 🎉`;
+        tttGameOver = true;
+    } else if (!tttBoard.includes('')) {
+        document.getElementById('tttResult').textContent = "It's a tie! 🤝";
+        tttGameOver = true;
+    } else {
+        tttCurrentPlayer = tttCurrentPlayer === 'X' ? 'O' : 'X';
+        document.getElementById('tttResult').textContent = `Player ${tttCurrentPlayer}'s turn`;
+    }
+}
+
+function resetTTT() {
+    tttBoard = ['', '', '', '', '', '', '', '', ''];
+    tttCurrentPlayer = 'X';
+    tttGameOver = false;
+    document.querySelectorAll('.ttt-cell').forEach(cell => cell.textContent = '');
+    document.getElementById('tttResult').textContent = "Your turn! (X)";
+}
+
+// Number Guessing
+let secretNumber = Math.floor(Math.random() * 100) + 1;
+let guessAttempts = 0;
+
+function playGuess() {
+    const guess = parseInt(document.getElementById('guessInput').value);
+    if (!guess || guess < 1 || guess > 100) return;
+    
+    guessAttempts++;
+    const result = document.getElementById('guessResult');
+    
+    if (guess === secretNumber) {
+        result.textContent = `🎉 You got it in ${guessAttempts} tries!`;
+        result.style.color = '#2ed573';
+    } else if (guess < secretNumber) {
+        result.textContent = `Too low! Attempts: ${guessAttempts}`;
+    } else {
+        result.textContent = `Too high! Attempts: ${guessAttempts}`;
+    }
+}
+
+function resetGuess() {
+    secretNumber = Math.floor(Math.random() * 100) + 1;
+    guessAttempts = 0;
+    document.getElementById('guessInput').value = '';
+    document.getElementById('guessResult').textContent = 'Attempts: 0';
+    document.getElementById('guessResult').style.color = 'var(--secondary)';
+}
+
 // Initialize
 console.log('LeoVerse loaded! Welcome to my universe 🚀');
