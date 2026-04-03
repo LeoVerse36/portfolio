@@ -400,5 +400,60 @@ function resetGuess() {
     document.getElementById('guessResult').style.color = 'var(--secondary)';
 }
 
+// Animated Star Background
+const canvas = document.getElementById('starBg');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+function createStars() {
+    stars = [];
+    const starCount = 150;
+    for (let i = 0; i < starCount; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2 + 0.5,
+            speed: Math.random() * 0.5 + 0.1,
+            opacity: Math.random()
+        });
+    }
+}
+
+function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    stars.forEach(star => {
+        star.y += star.speed;
+        star.opacity += 0.01;
+        if (star.opacity > 1) star.opacity = 0;
+        
+        if (star.y > canvas.height) {
+            star.y = 0;
+            star.x = Math.random() * canvas.width;
+        }
+        
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        ctx.fill();
+    });
+    
+    requestAnimationFrame(animateStars);
+}
+
+resizeCanvas();
+createStars();
+animateStars();
+
+window.addEventListener('resize', () => {
+    resizeCanvas();
+    createStars();
+});
+
 // Initialize
 console.log('LeoVerse loaded! Welcome to my universe 🚀');
