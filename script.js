@@ -178,125 +178,66 @@ if (musicToggle && bgMusic) {
     });
 }
 
-// Sky Kid - Virtual Pet
-const skykidContainer = document.getElementById('skykidContainer');
-const speechBubble = document.getElementById('speechBubble');
+// Virtual Pet
+const petContainer = document.getElementById('petContainer');
+const petElement = document.getElementById('pet');
+const petBubble = document.getElementById('petBubble');
 const petMenu = document.getElementById('petMenu');
 
-const pet = {
-    isMenuOpen: false,
-    currentMood: '',
-    
-    greetings: [
-        "✨ Hi there!",
-        "Hello, friend! ✨",
-        "Welcome! 🌟",
-        "Hi! Ready to fly? ✨",
-        "Hey! 💫",
-        "Let's explore! ✨"
-    ],
-    
-    speak(message, duration = 3000) {
-        speechBubble.textContent = message;
-        skykidContainer.classList.add('speaking');
-        setTimeout(() => {
-            skykidContainer.classList.remove('speaking');
-        }, duration);
-    },
-    
-    setMood(mood) {
-        skykidContainer.classList.remove('lighting', 'playing', 'sleeping');
-        if (mood) {
-            skykidContainer.classList.add(mood);
-            this.currentMood = mood;
-        }
-        if (!mood) {
-            this.currentMood = '';
-        }
-    },
-    
-    toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-        petMenu.classList.toggle('show', this.isMenuOpen);
-        if (this.isMenuOpen) {
-            this.speak("What do you want?", 10000);
-        }
-    },
-    
-    feed() {
-        this.isMenuOpen = false;
-        petMenu.classList.remove('show');
-        this.setMood('lighting');
-        this.speak("✨ My light grows!", 3000);
-        setTimeout(() => this.setMood(''), 3000);
-    },
-    
-    play() {
-        this.isMenuOpen = false;
-        petMenu.classList.remove('show');
-        this.setMood('playing');
-        this.speak("🎵 Let's fly!", 3000);
-        const phrases = ["Wheee! ✨", "Soaring! 🌟", "So fun! 💫", "Again! ✨", "Yay! 🎉"];
-        let count = 0;
-        const interval = setInterval(() => {
-            this.speak(phrases[count % phrases.length], 600);
-            count++;
-            if (count >= 6) {
-                clearInterval(interval);
-                this.setMood('');
-            }
-        }, 1000);
-    },
-    
-    sleep() {
-        this.isMenuOpen = false;
-        petMenu.classList.remove('show');
-        this.setMood('sleeping');
-        this.speak("🌙 Sweet dreams...", 5000);
-        const dreams = ["✨...", "Stars... 🌟", "Zzz... 💫"];
-        let i = 0;
-        const interval = setInterval(() => {
-            if (i < 5) {
-                this.speak(dreams[i % dreams.length], 1000);
-                i++;
-            } else {
-                clearInterval(interval);
-                this.setMood('');
-                this.speak("Good morning! ☀️", 2000);
-            }
-        }, 1200);
-    },
-    
-    init() {
-        // Click on sky kid
-        skykidContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('pet-btn')) return;
-            
-            if (this.isMenuOpen) {
-                this.toggleMenu();
-            } else {
-                const greeting = this.greetings[Math.floor(Math.random() * this.greetings.length)];
-                this.speak(greeting);
-            }
-        });
-        
-        // Double click to open menu
-        skykidContainer.addEventListener('dblclick', (e) => {
-            if (e.target.classList.contains('pet-btn')) return;
-            this.toggleMenu();
-        });
-        
-        // Initial greeting after 2 seconds
-        setTimeout(() => {
-            this.speak(this.greetings[Math.floor(Math.random() * this.greetings.length)]);
-        }, 2000);
-        
-        console.log("✨ Sky Kid initialized! Double-click to interact!");
-    }
-};
+let isMenuOpen = false;
 
-// Start the pet
-pet.init();
+function feed() {
+    isMenuOpen = false;
+    petMenu.classList.remove('show');
+    petElement.classList.add('happy');
+    petBubble.textContent = 'Yummy! 🍖';
+    petContainer.classList.add('speaking');
+    setTimeout(() => {
+        petElement.classList.remove('happy');
+        petContainer.classList.remove('speaking');
+    }, 3000);
+}
+
+function play() {
+    isMenuOpen = false;
+    petMenu.classList.remove('show');
+    petElement.classList.add('happy');
+    petBubble.textContent = 'Fire! 🔥';
+    petContainer.classList.add('speaking');
+    setTimeout(() => {
+        petElement.classList.remove('happy');
+        petContainer.classList.remove('speaking');
+    }, 3000);
+}
+
+function sleep() {
+    isMenuOpen = false;
+    petMenu.classList.remove('show');
+    petElement.classList.add('sleeping');
+    petBubble.textContent = 'Zzz... 💤';
+    petContainer.classList.add('speaking');
+    setTimeout(() => {
+        petElement.classList.remove('sleeping');
+        petContainer.classList.remove('speaking');
+    }, 5000);
+}
+
+petContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('pet-btn')) return;
+    
+    if (isMenuOpen) {
+        isMenuOpen = false;
+        petMenu.classList.remove('show');
+    } else {
+        isMenuOpen = true;
+        petMenu.classList.add('show');
+        petBubble.textContent = 'Roar! 🐉';
+        petContainer.classList.add('speaking');
+        setTimeout(() => {
+            petContainer.classList.remove('speaking');
+        }, 2000);
+    }
+});
 
 // Initialize
 console.log('LeoVerse loaded! Welcome to my universe 🚀');

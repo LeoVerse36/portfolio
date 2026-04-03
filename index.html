@@ -226,7 +226,7 @@
             <div class="featured-anime">
                 <div class="featured-card">
                     <div class="featured-badge">ULTIMATE FAVORITE</div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/OnePieceLogo.svg/300px-OnePieceLogo.svg.png" alt="One Piece" class="anime-logo">
+                    <div class="anime-icon">☠️🏴‍☠️</div>
                     <h3>One Piece</h3>
                     <p>Monkey D. Luffy and the Straw Hats' adventure to find the One Piece. The greatest anime of all time. Nuff said.</p>
                     <div class="tags">
@@ -410,40 +410,36 @@
         </audio>
     </div>
 
-    <!-- Sky Kid Pet -->
-    <div class="skykid-container" id="skykidContainer">
-        <div class="skykid" id="skykid">
-            <!-- Candle/Light -->
-            <div class="sky-candle">
-                <div class="candle-flame"></div>
-            </div>
-            <!-- Cape -->
-            <div class="sky-cape"></div>
-            <!-- Body -->
-            <div class="sky-body">
-                <div class="sky-face">
-                    <div class="sky-eyes">
-                        <div class="sky-eye left"></div>
-                        <div class="sky-eye right"></div>
-                    </div>
-                    <div class="sky-cheeks">
-                        <div class="cheek left"></div>
-                        <div class="cheek right"></div>
-                    </div>
+    <!-- Virtual Pet - Dragon -->
+    <div class="pet-container" id="petContainer">
+        <div class="pet" id="pet">
+            <div class="dragon">
+                <div class="dragon-horns">
+                    <div class="horn left"></div>
+                    <div class="horn right"></div>
                 </div>
+                <div class="dragon-head">
+                    <div class="dragon-eyes">
+                        <div class="dragon-eye left"></div>
+                        <div class="dragon-eye right"></div>
+                    </div>
+                    <div class="dragon-nostril left"></div>
+                    <div class="dragon-nostril right"></div>
+                    <div class="dragon-smoke"></div>
+                </div>
+                <div class="dragon-body">
+                    <div class="dragon-belly"></div>
+                </div>
+                <div class="dragon-wing left"></div>
+                <div class="dragon-wing right"></div>
+                <div class="dragon-tail"></div>
             </div>
-            <!-- Hair -->
-            <div class="sky-hair"></div>
-            <!-- Stars floating -->
-            <div class="floating-star star1">✨</div>
-            <div class="floating-star star2">✨</div>
-            <div class="floating-star star3">✨</div>
         </div>
-        <div class="speech-bubble" id="speechBubble">✨ Hi!</div>
+        <div class="pet-bubble" id="petBubble">Roar! 🐉</div>
         <div class="pet-menu" id="petMenu">
-            <button class="pet-btn" onclick="pet.feed()">🕯️ Light</button>
-            <button class="pet-btn" onclick="pet.play()">🎵 Music</button>
-            <button class="pet-btn" onclick="pet.sleep()">🌙 Rest</button>
+            <button class="pet-btn" onclick="feed()">🍖 Feed</button>
+            <button class="pet-btn" onclick="play()">🔥 Play</button>
+            <button class="pet-btn" onclick="sleep()">💤 Sleep</button>
         </div>
     </div>
 

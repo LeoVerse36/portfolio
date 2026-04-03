@@ -353,7 +353,7 @@ nav {
     width: 200px;
     height: auto;
     margin-bottom: 15px;
-    filter: drop-shadow(0 0 20px rgba(233, 69, 96, 0.5));
+    filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5));
 }
 
 .show-item > div p, .novel-item > div p {
@@ -373,7 +373,7 @@ nav {
     text-align: center;
     position: relative;
     overflow: hidden;
-    border: 2px solid var(--primary);
+    border: 2px solid var(--secondary);
 }
 
 .featured-card::before {
@@ -709,269 +709,312 @@ footer {
     animation: pulse 1s infinite;
 }
 
-/* Sky Kid - Virtual Pet */
+/* Running Character - Hidden for now */
 .skykid-container {
+    display: none;
+}
+
+@keyframes walkAcross {
+    0% { left: -150px; }
+    42% { left: calc(100vw - 160px); }
+    50% { left: calc(100vw - 160px); transform: scaleX(-1); }
+    58% { left: calc(100vw - 160px); transform: scaleX(-1); }
+    90% { left: -150px; transform: scaleX(1); }
+    100% { left: -150px; }
+}
+
+.skykid {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.skykid-bg {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .skykid-container {
+        transform: scale(0.8);
+    }
+}
+
+.speech-bubble, .pet-menu {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .skykid-container {
+        transform: scale(0.6);
+    }
+}
+
+/* Virtual Pet - Dragon */
+.pet-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 15px;
+    right: 25px;
     z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
 }
 
-/* Sky Kid Styles */
-.skykid {
-    width: 80px;
-    height: 100px;
-    position: relative;
-    animation: floatSky 3s ease-in-out infinite;
+.pet {
+    width: 70px;
+    height: 80px;
+    animation: petBounce 1s ease-in-out infinite;
+    transition: transform 0.3s;
 }
 
-@keyframes floatSky {
+@keyframes petBounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-5px); }
 }
 
-/* Candle */
-.sky-candle {
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 25px;
-    background: linear-gradient(to top, #8B4513, #D2691E);
-    border-radius: 2px 2px 4px 4px;
+.pet:hover {
+    transform: scale(1.1);
 }
 
-.candle-flame {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 15px;
-    background: radial-gradient(ellipse at bottom, #FFD700, #FFA500, #FF6B35, transparent);
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: flicker 0.5s ease-in-out infinite alternate;
-    box-shadow: 0 0 20px #FFD700, 0 0 40px #FFA500;
-}
-
-@keyframes flicker {
-    0% { transform: translateX(-50%) scale(1); opacity: 1; }
-    100% { transform: translateX(-50%) scale(1.1, 0.9); opacity: 0.8; }
-}
-
-/* Cape */
-.sky-cape {
-    position: absolute;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(180deg, #4A90D9, #87CEEB);
-    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-    z-index: 1;
-    animation: capeFloat 4s ease-in-out infinite;
-}
-
-@keyframes capeFloat {
-    0%, 100% { transform: translateX(-50%) skewX(0deg); }
-    25% { transform: translateX(-50%) skewX(3deg); }
-    75% { transform: translateX(-50%) skewX(-3deg); }
-}
-
-/* Body */
-.sky-body {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(180deg, #F5F5DC, #FFFACD);
-    border-radius: 50% 50% 45% 45%;
-    z-index: 2;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-}
-
-/* Face */
-.sky-face {
-    position: absolute;
+.dragon {
+    position: relative;
     width: 100%;
     height: 100%;
-    top: 0;
 }
 
-.sky-eyes {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+.dragon-horns {
     position: absolute;
-    top: 15px;
-    width: 100%;
-}
-
-.sky-eye {
-    width: 10px;
-    height: 10px;
-    background: #1f2937;
-    border-radius: 50%;
-    animation: skyBlink 4s ease-in-out infinite;
-}
-
-@keyframes skyBlink {
-    0%, 90%, 100% { transform: scaleY(1); }
-    95% { transform: scaleY(0.1); }
-}
-
-.sky-cheeks {
-    position: absolute;
-    top: 25px;
+    top: -5px;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0 5px;
+    padding: 0 15px;
 }
 
-.cheek {
+.horn {
+    width: 12px;
+    height: 20px;
+    background: linear-gradient(135deg, #4a3728, #8b6914);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.horn.left { transform: rotate(-20deg); }
+.horn.right { transform: rotate(20deg); }
+
+.dragon-head {
+    width: 45px;
+    height: 35px;
+    background: linear-gradient(135deg, #2d5a27, #4a8f41);
+    border-radius: 50% 50% 40% 40%;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+}
+
+.dragon-eyes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-top: 8px;
+}
+
+.dragon-eye {
     width: 8px;
-    height: 5px;
-    background: rgba(255, 182, 193, 0.6);
+    height: 10px;
+    background: #ffd700;
+    border-radius: 50%;
+    position: relative;
+}
+
+.dragon-eye::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #000;
+    border-radius: 50%;
+    top: 3px;
+    left: 2px;
+    animation: eyeMove 3s ease-in-out infinite;
+}
+
+@keyframes eyeMove {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(2px); }
+}
+
+.dragon-nostril {
+    position: absolute;
+    bottom: 8px;
+    width: 4px;
+    height: 3px;
+    background: #1a3d16;
     border-radius: 50%;
 }
 
-/* Hair */
-.sky-hair {
+.dragon-nostril.left { left: 12px; }
+.dragon-nostril.right { right: 12px; }
+
+.dragon-smoke {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    font-size: 8px;
+    animation: smoke 2s ease-in-out infinite;
+}
+
+@keyframes smoke {
+    0% { opacity: 0; transform: translateX(0); }
+    50% { opacity: 0.8; }
+    100% { opacity: 0; transform: translateX(10px); }
+}
+
+.dragon-body {
+    width: 35px;
+    height: 30px;
+    background: linear-gradient(135deg, #2d5a27, #4a8f41);
+    border-radius: 50% 50% 45% 45%;
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dragon-belly {
+    width: 20px;
+    height: 20px;
+    background: #8fbc8f;
+    border-radius: 50%;
     position: absolute;
     top: 5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 45px;
-    height: 20px;
-    background: linear-gradient(135deg, #8B4513, #D2691E);
-    border-radius: 50% 50% 0 0;
-    z-index: 3;
 }
 
-/* Floating Stars */
-.floating-star {
+.dragon-wing {
     position: absolute;
-    font-size: 12px;
-    color: #FFD700;
-    animation: twinkle 2s ease-in-out infinite;
+    top: 30px;
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(135deg, #1e4d1b, #2d5a27);
+    clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+    animation: wingFlap 0.5s ease-in-out infinite alternate;
 }
 
-.star1 { top: -15px; right: -5px; animation-delay: 0s; }
-.star2 { top: 0px; left: -10px; animation-delay: 0.5s; }
-.star3 { top: 30px; right: -15px; animation-delay: 1s; }
-
-@keyframes twinkle {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.5); }
+.dragon-wing.left {
+    left: -15px;
+    transform: scaleX(-1);
 }
 
-/* Sky Kid States */
-.skykid-container.lighting .candle-flame {
-    animation: brighten 0.5s ease-in-out infinite;
+.dragon-wing.right {
+    right: -15px;
 }
 
-@keyframes brighten {
-    0%, 100% { box-shadow: 0 0 30px #FFD700, 0 0 60px #FFA500; }
-    50% { box-shadow: 0 0 50px #FFD700, 0 0 80px #FFA500; }
+@keyframes wingFlap {
+    0% { transform: scaleX(1) rotate(0deg); }
+    100% { transform: scaleX(1) rotate(10deg); }
 }
 
-.skykid-container.playing .skykid {
-    animation: dance 0.5s ease-in-out infinite;
-}
-
-@keyframes dance {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-15px) rotate(5deg); }
-}
-
-.skykid-container.sleeping .sky-eye {
-    height: 2px;
-    border-radius: 2px;
-}
-
-/* Speech Bubble */
-.speech-bubble {
+.dragon-tail {
+    width: 30px;
+    height: 8px;
+    background: linear-gradient(135deg, #2d5a27, #4a8f41);
+    border-radius: 0 50% 50% 0;
     position: absolute;
-    bottom: 110%;
+    bottom: 5px;
+    left: -10px;
+    transform: rotate(-20deg);
+    animation: tailWag 1s ease-in-out infinite;
+}
+
+@keyframes tailWag {
+    0%, 100% { transform: rotate(-20deg); }
+    50% { transform: rotate(-10deg); }
+}
+
+.pet.happy .dragon-wing {
+    animation: wingFly 0.2s ease-in-out infinite;
+}
+
+@keyframes wingFly {
+    0%, 100% { transform: scaleX(1) rotate(-20deg); }
+    50% { transform: scaleX(1) rotate(20deg); }
+}
+
+.pet.sleeping {
+    animation: none;
+    opacity: 0.7;
+}
+
+.pet-bubble {
+    position: absolute;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
     color: #333;
-    padding: 10px 15px;
+    padding: 8px 15px;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
+    font-size: 14px;
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.3s;
-    margin-bottom: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.speech-bubble::after {
+.pet-bubble::after {
     content: '';
     position: absolute;
-    top: 100%;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
     border: 8px solid transparent;
     border-top-color: #fff;
 }
 
-.kitty-container:hover .speech-bubble,
-.kitty-container.speaking .speech-bubble {
+.pet-container.speaking .pet-bubble {
     opacity: 1;
 }
 
-/* Pet Menu */
 .pet-menu {
-    position: absolute;
-    bottom: 110%;
-    right: 0;
-    background: var(--card-bg);
-    border-radius: 15px;
-    padding: 10px;
     display: none;
     flex-direction: column;
-    gap: 5px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    margin-bottom: 10px;
+    gap: 8px;
+    position: absolute;
+    top: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 15px;
+    z-index: 10000;
 }
 
 .pet-menu.show {
     display: flex;
-    animation: popIn 0.3s ease;
+    animation: menuShow 0.3s ease;
 }
 
-@keyframes popIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to { opacity: 1; transform: scale(1); }
+@keyframes menuShow {
+    from { opacity: 0; transform: translateX(-50%) scale(0.8); }
+    to { opacity: 1; transform: translateX(-50%) scale(1); }
 }
 
 .pet-btn {
     background: transparent;
-    border: 1px solid var(--primary);
-    color: var(--primary);
+    border: 1px solid #fff;
+    color: #fff;
     padding: 8px 15px;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 14px;
     transition: all 0.3s;
 }
 
 .pet-btn:hover {
-    background: var(--primary);
-    color: white;
-}
-
-@media (max-width: 768px) {
-    .kitty-container {
-        transform: scale(0.8);
-    }
+    background: #fff;
+    color: #000;
 }
