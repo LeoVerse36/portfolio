@@ -1,0 +1,302 @@
+// Smooth scrolling for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update active nav
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Close mobile menu if open
+            document.querySelector('.nav-links').style.display = '';
+        }
+    });
+});
+
+// Active nav on scroll
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    const scrollPos = window.scrollY + 100;
+    
+    sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        
+        if (scrollPos >= top && scrollPos < top + height) {
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === `#${id}`) {
+                    a.classList.add('active');
+                }
+            });
+        }
+    });
+});
+
+// Contact form handling
+const contactForm = document.getElementById('contactForm');
+const formSuccess = document.getElementById('formSuccess');
+
+contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    // Validate
+    if (!data.name || !data.email || !data.message) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    // Create mailto link
+    const subject = encodeURIComponent(data.subject ? `[LeoVerse] ${data.subject}` : '[LeoVerse] New Message');
+    const body = encodeURIComponent(
+        `Name: ${data.name}\n` +
+        `Email: ${data.email}\n` +
+        `Topic: ${data.subject || 'General'}\n\n` +
+        `Message:\n${data.message}`
+    );
+    
+    // Open email client
+    window.location.href = `mailto:your.email@example.com?subject=${subject}&body=${body}`;
+    
+    // Show success
+    contactForm.style.display = 'none';
+    formSuccess.style.display = 'block';
+    
+    // Reset form after 5 seconds
+    setTimeout(() => {
+        contactForm.reset();
+        contactForm.style.display = 'block';
+        formSuccess.style.display = 'none';
+    }, 5000);
+});
+
+// Animate elements on scroll
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Apply to cards
+document.querySelectorAll('.card, .quote-card, .featured-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+});
+
+// Mobile menu toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+    if (navLinks.style.display === 'flex') {
+        navLinks.style.display = '';
+    } else {
+        navLinks.style.display = 'flex';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.position = 'absolute';
+        navLinks.style.top = '100%';
+        navLinks.style.left = '0';
+        navLinks.style.right = '0';
+        navLinks.style.background = 'rgba(5, 5, 5, 0.98)';
+        navLinks.style.padding = '20px';
+        navLinks.style.gap = '15px';
+    }
+});
+
+// Background Music Playlist
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+const songTitle = document.getElementById('songTitle');
+
+const playlist = [
+    { src: 'queendom.mp3', name: 'Queendom - AURORA' }
+];
+
+let currentSongIndex = 0;
+let isPlaying = false;
+
+function loadSong(index) {
+    const song = playlist[index];
+    bgMusic.src = song.src;
+    if (songTitle) {
+        songTitle.textContent = song.name;
+    }
+}
+
+function playNext() {
+    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    loadSong(currentSongIndex);
+    bgMusic.play().catch(() => {});
+}
+
+function playPrev() {
+    currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+    loadSong(currentSongIndex);
+    bgMusic.play().catch(() => {});
+}
+
+if (musicToggle && bgMusic) {
+    loadSong(0);
+    
+    bgMusic.addEventListener('ended', playNext);
+    
+    musicToggle.addEventListener('click', () => {
+        if (isPlaying) {
+            bgMusic.pause();
+            musicToggle.textContent = '🔇';
+            musicToggle.classList.remove('playing');
+        } else {
+            bgMusic.play().catch(() => {
+                console.log('Music requires user interaction to play');
+            });
+            musicToggle.textContent = '🔊';
+            musicToggle.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    });
+    
+    bgMusic.addEventListener('click', () => {
+        if (isPlaying) playNext();
+    });
+}
+
+// Sky Kid - Virtual Pet
+const skykidContainer = document.getElementById('skykidContainer');
+const speechBubble = document.getElementById('speechBubble');
+const petMenu = document.getElementById('petMenu');
+
+const pet = {
+    isMenuOpen: false,
+    currentMood: '',
+    
+    greetings: [
+        "✨ Hi there!",
+        "Hello, friend! ✨",
+        "Welcome! 🌟",
+        "Hi! Ready to fly? ✨",
+        "Hey! 💫",
+        "Let's explore! ✨"
+    ],
+    
+    speak(message, duration = 3000) {
+        speechBubble.textContent = message;
+        skykidContainer.classList.add('speaking');
+        setTimeout(() => {
+            skykidContainer.classList.remove('speaking');
+        }, duration);
+    },
+    
+    setMood(mood) {
+        skykidContainer.classList.remove('lighting', 'playing', 'sleeping');
+        if (mood) {
+            skykidContainer.classList.add(mood);
+            this.currentMood = mood;
+        }
+        if (!mood) {
+            this.currentMood = '';
+        }
+    },
+    
+    toggleMenu() {
+        this.isMenuOpen = !this.isMenuOpen;
+        petMenu.classList.toggle('show', this.isMenuOpen);
+        if (this.isMenuOpen) {
+            this.speak("What do you want?", 10000);
+        }
+    },
+    
+    feed() {
+        this.isMenuOpen = false;
+        petMenu.classList.remove('show');
+        this.setMood('lighting');
+        this.speak("✨ My light grows!", 3000);
+        setTimeout(() => this.setMood(''), 3000);
+    },
+    
+    play() {
+        this.isMenuOpen = false;
+        petMenu.classList.remove('show');
+        this.setMood('playing');
+        this.speak("🎵 Let's fly!", 3000);
+        const phrases = ["Wheee! ✨", "Soaring! 🌟", "So fun! 💫", "Again! ✨", "Yay! 🎉"];
+        let count = 0;
+        const interval = setInterval(() => {
+            this.speak(phrases[count % phrases.length], 600);
+            count++;
+            if (count >= 6) {
+                clearInterval(interval);
+                this.setMood('');
+            }
+        }, 1000);
+    },
+    
+    sleep() {
+        this.isMenuOpen = false;
+        petMenu.classList.remove('show');
+        this.setMood('sleeping');
+        this.speak("🌙 Sweet dreams...", 5000);
+        const dreams = ["✨...", "Stars... 🌟", "Zzz... 💫"];
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < 5) {
+                this.speak(dreams[i % dreams.length], 1000);
+                i++;
+            } else {
+                clearInterval(interval);
+                this.setMood('');
+                this.speak("Good morning! ☀️", 2000);
+            }
+        }, 1200);
+    },
+    
+    init() {
+        // Click on sky kid
+        skykidContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('pet-btn')) return;
+            
+            if (this.isMenuOpen) {
+                this.toggleMenu();
+            } else {
+                const greeting = this.greetings[Math.floor(Math.random() * this.greetings.length)];
+                this.speak(greeting);
+            }
+        });
+        
+        // Double click to open menu
+        skykidContainer.addEventListener('dblclick', (e) => {
+            if (e.target.classList.contains('pet-btn')) return;
+            this.toggleMenu();
+        });
+        
+        // Initial greeting after 2 seconds
+        setTimeout(() => {
+            this.speak(this.greetings[Math.floor(Math.random() * this.greetings.length)]);
+        }, 2000);
+        
+        console.log("✨ Sky Kid initialized! Double-click to interact!");
+    }
+};
+
+// Start the pet
+pet.init();
+
+// Initialize
+console.log('LeoVerse loaded! Welcome to my universe 🚀');
